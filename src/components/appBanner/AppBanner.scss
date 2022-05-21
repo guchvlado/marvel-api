@@ -1,0 +1,26 @@
+@import "../../style/variables.scss";
+
+.AppBanner {
+    margin: 50px 0;
+    max-height: 100px;
+    display: flex;
+    background-color: $dark-color;
+    color: #fff;
+    align-items: center;
+    &__avengers {
+        margin-left: 45px;
+        height: 100px;
+        object-fit: cover;
+    }
+    &__title {
+        margin-left: 83px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    &__avengers-logo {
+        height: 100px;
+        object-fit: cover;
+        margin-left: auto;
+        margin-right: 25px;
+    }
+}

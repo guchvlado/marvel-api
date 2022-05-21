@@ -1,0 +1,30 @@
+@import "../../style/variables.scss";
+.AppHeader {
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    &__title {
+        font-size: 28px;
+        font-weight: bold;
+        span {
+            color: $main-color;
+        }
+    }
+    &__menu {
+        ul {
+            display: flex;
+            font-size: 24px;
+            font-weight: bold;
+            gap: 8px;
+            li {
+                transition: $transition;
+                &:hover {
+                    color: lighten($color: $main-color, $amount: 20%);
+                }
+                &.active {
+                    color: $main-color;
+                }
+            }
+        }
+    }
+}

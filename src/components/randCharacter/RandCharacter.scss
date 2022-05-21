@@ -1,0 +1,70 @@
+@import "../../style/variables.scss";
+.RandCharacter {
+    margin-top: 50px;
+    display: flex;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
+    &__about {
+        padding: 35px 35px 35px 40px;
+        flex: 1;
+        display: flex;
+        color: #000;
+    }
+    img {
+        width: 180px;
+        object-fit: cover;
+    }
+    &__info {
+        margin-left: 30px;
+    }
+    &__name {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+    }
+    &__descr {
+        margin-top: 10px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    &__buttons-group {
+        margin-top: 13px;
+        display: flex;
+        gap: 30px;
+    }
+
+    &__banner {
+        position: relative;
+        padding: 35px 35px 35px 40px;
+        flex: 1;
+        background-color: $dark-color;
+        color: #fff;
+        button {
+            margin-top: 13px;
+            &:before, &:after {
+                border-color: $main-color $dark-color;
+            }
+            &:hover {
+                background-color: lighten($main-color, 10%);
+                &:before, &:after {
+                    border-color: lighten($main-color, 10%) $dark-color;
+                }
+            }
+        }
+    }
+    &__banner-text {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        &_middle {
+            margin-top: 33px;
+        }
+    }
+    &__banner-bg {
+        position: absolute;
+        right: -35px;
+        bottom: 14px;
+        width: 203px;
+        object-fit: cover;
+    }
+}

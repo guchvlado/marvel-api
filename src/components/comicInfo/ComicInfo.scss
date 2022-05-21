@@ -1,0 +1,54 @@
+@import '../../style/variables.scss';
+
+.ComicInfo {
+    margin-top: 50px;
+    display: flex;
+    color: #000;
+    &__about {
+        margin-left: 50px;
+        width: 100%;
+    }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__name {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+    }
+    &__back {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 21px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    &__text {
+        margin-top: 28px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        max-width: 550px;
+    }
+    &__pages {
+        margin-top: 40px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+    }
+    &__lang {
+        margin-top: 28px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+    }
+    &__price {
+        margin-top: 28px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: $main-color;
+    }
+}

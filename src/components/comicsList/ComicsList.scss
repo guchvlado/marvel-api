@@ -1,0 +1,9 @@
+.ComicsList {
+    margin-top: 49px;
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 225px);
+        column-gap: 67px;
+        row-gap: 57px;
+    }
+}
