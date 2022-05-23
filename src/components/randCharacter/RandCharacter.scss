@@ -11,10 +11,14 @@
     }
     img {
         width: 180px;
+        height: 180px;
         object-fit: cover;
     }
     &__info {
         margin-left: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     &__name {
         font-weight: 700;
@@ -26,9 +30,9 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 16px;
+        flex-grow: 1;
     }
     &__buttons-group {
-        margin-top: 13px;
         display: flex;
         gap: 30px;
     }
@@ -39,8 +43,10 @@
         flex: 1;
         background-color: $dark-color;
         color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         button {
-            margin-top: 13px;
             &:before, &:after {
                 border-color: $main-color $dark-color;
             }
@@ -56,9 +62,6 @@
         font-weight: 700;
         font-size: 24px;
         line-height: 28px;
-        &_middle {
-            margin-top: 33px;
-        }
     }
     &__banner-bg {
         position: absolute;
