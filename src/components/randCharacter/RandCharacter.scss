@@ -3,9 +3,11 @@
     margin-top: 50px;
     display: flex;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.25);
+    height: 250px;
     &__about {
         padding: 35px 35px 35px 40px;
-        flex: 1;
+        // flex: 1;
+        width: 50%;
         display: flex;
         color: #000;
     }
@@ -40,7 +42,8 @@
     &__banner {
         position: relative;
         padding: 35px 35px 35px 40px;
-        flex: 1;
+        // flex: 1;
+        width: 50%;
         background-color: $dark-color;
         color: #fff;
         display: flex;

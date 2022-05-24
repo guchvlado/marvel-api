@@ -2,15 +2,13 @@ import './CharItem.scss';
 
 import React from 'react'
 
-import abyss from '../../resources/img/abyss.png';
-
-function CharItem() {
+function CharItem({name, thumbnail}) {
   return (
     <div className='CharItem'>
-        <img className='CharItem__img' src={abyss} alt="abyss" />
+        <img className='CharItem__img' src={thumbnail} alt="abyss" />
         <div className="CharItem__block">
             <h4 className="CharItem__name">
-                abyss
+                {name}
             </h4>
         </div>
     </div>
