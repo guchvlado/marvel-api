@@ -1,59 +1,110 @@
-import React from 'react'
+import {Component} from 'react'
+
+import MarvelService from '../../services/MarvelService';
 
 import './CharInfo.scss';
-import loki from '../../resources/img/loki_mini.png';
+import Sceleton from '../skeleton/Sceleton';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
-function CharInfo() {
-  return (
-    <article className='CharInfo'>
-        <div className="CharInfo__header">
-            <img src={loki} alt="loki" />
-            <div className="CharInfo__about">
-                <h4 className="CharInfo__name">LOKI</h4>
-                <div className="CharInfo__buttons-group">
-                    <button className="button">HOMEPAGE</button>
-                    <button className="button button_gray">WIKI</button>
+class CharInfo extends Component {
+    state = {
+        character: null,
+        loading: false,
+        error: false
+    }
+
+    marvelService = new MarvelService();
+
+    onCharacterLoaded = (character) => {
+        this.setState({
+            character,
+            loading: false
+        })
+    }   
+
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
+    }
+
+    updateCharacter = () => {
+        const {characterId} = this.props;
+        if (!characterId) {
+            return;
+        }
+        this.setState({
+            loading: true,
+            error: false
+        });
+        this.marvelService
+        .getCharacter(characterId)
+        .then(this.onCharacterLoaded)///res => this.setState({character: res})
+        .catch(this.onError);
+    }
+
+    componentDidMount() {
+        this.updateCharacter();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.characterId !== this.props.characterId) {
+            this.updateCharacter();
+        }
+    }
+
+    render() {
+        const {character, loading, error} = this.state;
+        const skeleton = !character ? <Sceleton/> : null;
+        const spinner = loading ? <Spinner/> : null;
+        const errorMessage = error ? <ErrorMessage/> : null;
+        const content = !(loading || error) && character ? <View character={character}/> : null;
+        return (
+            <>
+                {skeleton}
+                {spinner}
+                {errorMessage}
+                {content}
+            </>
+          )
+    }
+}
+
+const View = ({character}) => {
+    const {name, description, thumbnail, homepage, wiki, comics} = character;
+    const haveImage = thumbnail.search("image_not_available") > 0 ? false : true;
+    return (
+        <article className='CharInfo'>
+            <div className="CharInfo__header">
+                <img src={thumbnail} alt="loki" style={haveImage ? {} : {objectFit: "contain"}} />
+                <div className="CharInfo__about">
+                    <h4 className="CharInfo__name">{name}</h4>
+                    <div className="CharInfo__buttons-group">
+                        <a href={homepage} className="button">HOMEPAGE</a>
+                        <a href={wiki} className="button button_gray">WIKI</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <p className="CharInfo__descr">
-        In Norse mythology, Loki is a god or jötunn (or both). Loki is the son of Fárbauti and Laufey, and the brother of Helblindi and Býleistr. By the jötunn Angrboða, Loki is the father of Hel, the wolf Fenrir, and the world serpent Jörmungandr. By Sigyn, Loki is the father of Nari and/or Narfi and with the stallion Svaðilfari as the father, Loki gave birth—in the form of a mare—to the eight-legged horse Sleipnir. In addition, Loki is referred to as the father of Váli in the Prose Edda.
-        </p>
-        <div className="CharInfo__comics">Comics:</div>
-        <ul className="CharInfo__comics-list">
-            <li className="CharInfo__comics-item">
-                All-Winners Squad: Band of Heroes (2011) #3
-            </li>
-            <li className="CharInfo__comics-item">
-                Alpha Flight (1983) #50
-            </li>
-            <li className="CharInfo__comics-item">
-                Amazing Spider-Man (1999) #503
-            </li>
-            <li className="CharInfo__comics-item">
-                Amazing Spider-Man (1999) #504
-            </li>
-            <li className="CharInfo__comics-item">
-                AMAZING SPIDER-MAN VOL. 7: BOOK OF EZEKIEL TPB (Trade Paperback)
-            </li>
-            <li className="CharInfo__comics-item">
-                Amazing-Spider-Man: Worldwide Vol. 8 (Trade Paperback)
-            </li>
-            <li className="CharInfo__comics-item">
-                Asgardians Of The Galaxy Vol. 2: War Of The Realms (Trade Paperback)
-            </li>
-            <li className="CharInfo__comics-item">
-                Vengeance (2011) #4
-            </li>
-            <li className="CharInfo__comics-item">
-                Avengers (1963) #1
-            </li>
-            <li className="CharInfo__comics-item">
-                Avengers (1996) #1
-            </li>
-        </ul>
-    </article>
-  )
+            <p className="CharInfo__descr">
+                {description}
+            </p>
+            <div className="CharInfo__comics">Comics:</div>
+            <ul className="CharInfo__comics-list">
+                {comics.length === 0 ? "There is no comics for this character." : null}
+                {
+                    comics.slice(0,10).map((item, i) => {
+                        return (
+                            <li key={i} className="CharInfo__comics-item">
+                                {item.name}
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        </article>
+    )
 }
 
 export default CharInfo

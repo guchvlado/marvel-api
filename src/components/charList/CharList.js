@@ -48,7 +48,11 @@ class CharList extends Component {
 
   renderCharacters = (characters) => {
     return characters.map((char) => 
-      <CharItem name={char.name} thumbnail={char.thumbnail} key={char.id}/>
+      <CharItem 
+        name={char.name} 
+        thumbnail={char.thumbnail} 
+        key={char.id} 
+        onSelectCharacter={() => this.props.onSelectCharacter(char.id)}/>
     )
   }
 
