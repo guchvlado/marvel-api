@@ -2,9 +2,9 @@ import './CharItem.scss';
 
 import React from 'react'
 
-function CharItem({name, thumbnail, onSelectCharacter}) {
+function CharItem({name, thumbnail, onSelectCharacter, refFunc}) {
   return (
-    <div className='CharItem' onClick={onSelectCharacter}>
+    <div ref={refFunc} className='CharItem' onClick={onSelectCharacter} tabIndex={0}>
         <img className='CharItem__img' src={thumbnail} alt="abyss" />
         <div className="CharItem__block">
             <h4 className="CharItem__name">
