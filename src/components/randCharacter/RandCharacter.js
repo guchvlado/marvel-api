@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -7,68 +7,60 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import './RandCharacter.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 
-class RandCharacter extends Component {
-    state = {
-        character: {},
-        loading: true,
-        error: false
-    }
+const RandCharacter = () => {
+    const [character, setCharacter] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    marvelService = new MarvelService();
+    const marvelService = new MarvelService();
 
-    onCharacterLoaded = (character) => {
-        this.setState({
-            character,
-            loading: false
-        })
+    const onCharacterLoaded = (character) => {
+        setCharacter(character);
+        setLoading(false);
     }   
 
-    onError = () => {
-        this.setState({
-            loading: false,
-            error: true
-        })
+    const onError = () => {
+        setLoading(false);
+        setError(true);
     }
 
-    updateCharacter = () => {
+    const updateCharacter = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        this.setState({
-            loading: true,
-            error: false
-        });
-        this.marvelService
+
+        setLoading(true);
+        setError(false);
+
+        marvelService
             .getCharacter(id)
-            .then(this.onCharacterLoaded)
-            .catch(this.onError);
+            .then(onCharacterLoaded)
+            .catch(onError);
     }
 
-    componentDidMount() {
-        this.updateCharacter();
-    }
+    useEffect(() => {
+        updateCharacter();
+        // eslint-disable-next-line
+    }, []);
 
-    render() {
-        const {character, loading, error} = this.state;
+    
+    const spinner = loading ? <Spinner/> : null;
+    const err = error ? <ErrorMessage/> : null;
+    const content = !(loading || error) ? <View char={character}/> : null;
 
-        const spinner = loading ? <Spinner/> : null;
-        const err = error ? <ErrorMessage/> : null;
-        const content = !(loading || error) ? <View char={character}/> : null;
-
-        return (
-            <div className='RandCharacter'>
-                {err}
-                {spinner}
-                {content}
-        
-                <div className="RandCharacter__banner">
-                    <p className="RandCharacter__banner-text">Random character for today!<br/>
-        Do you want to get to know him better?</p>
-                    <p className="RandCharacter__banner-text">Or choose another one</p>
-                    <button className="button" onClick={this.updateCharacter}>TRY IT</button>
-                    <img className="RandCharacter__banner-bg" src={mjolnir} alt="mjolnir" />
-                </div>
+    return (
+        <div className='RandCharacter'>
+            {err}
+            {spinner}
+            {content}
+    
+            <div className="RandCharacter__banner">
+                <p className="RandCharacter__banner-text">Random character for today!<br/>
+    Do you want to get to know him better?</p>
+                <p className="RandCharacter__banner-text">Or choose another one</p>
+                <button className="button" onClick={updateCharacter}>TRY IT</button>
+                <img className="RandCharacter__banner-bg" src={mjolnir} alt="mjolnir" />
             </div>
-          )
-    }
+        </div>
+        )
 }
 
 const View = ({char}) => {
@@ -82,8 +74,8 @@ const View = ({char}) => {
                 <h3 className="RandCharacter__name">{name}</h3>
                 <p className="RandCharacter__descr">{description}</p>
                 <div className="RandCharacter__buttons-group">
-                    <a href={homepage} className="button">HOMEPAGE</a>
-                    <a href={wiki} className="button button_gray">WIKI</a>
+                    <a target={'_blank'} rel={'noreferrer'} href={homepage} className="button">HOMEPAGE</a>
+                    <a target={'_blank'} rel={'noreferrer'} href={wiki} className="button button_gray">WIKI</a>
                 </div>
             </div>
         </div>
