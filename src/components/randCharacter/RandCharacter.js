@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
@@ -9,31 +9,19 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 const RandCharacter = () => {
     const [character, setCharacter] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
 
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     const onCharacterLoaded = (character) => {
         setCharacter(character);
-        setLoading(false);
     }   
 
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-
     const updateCharacter = () => {
+        clearError();
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-
-        setLoading(true);
-        setError(false);
-
-        marvelService
-            .getCharacter(id)
-            .then(onCharacterLoaded)
-            .catch(onError);
+        
+        getCharacter(id)
+            .then(onCharacterLoaded);
     }
 
     useEffect(() => {
@@ -65,7 +53,7 @@ const RandCharacter = () => {
 
 const View = ({char}) => {
     const {name, description, thumbnail, homepage, wiki} = char;
-    const haveImage = thumbnail.search("image_not_available") > 0 ? false : true;
+    const haveImage = thumbnail && thumbnail.search("image_not_available") > 0 ? false : true;
 
     return (
         <div className="RandCharacter__about">

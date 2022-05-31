@@ -21,7 +21,7 @@
                 &:hover {
                     color: lighten($color: $main-color, $amount: 20%);
                 }
-                &.active {
+                a.active {
                     color: $main-color;
                 }
             }

@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import PropTypes from 'prop-types';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 
 import './CharInfo.scss';
 import Sceleton from '../skeleton/Sceleton';
@@ -10,32 +10,21 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 const CharInfo = (props) => {
     const [character, setCharacter] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
-    const marvelService = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     const onCharacterLoaded = (character) => {
         setCharacter(character);
-        setLoading(false);
     }   
 
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-
     const updateCharacter = () => {
+        clearError();
         const {characterId} = props;
         if (!characterId) {
             return;
         }
-        setLoading(true);
-        setError(false);
-        marvelService
-            .getCharacter(characterId)
-            .then(onCharacterLoaded)
-            .catch(onError);
+        getCharacter(characterId)
+            .then(onCharacterLoaded);
     }
 
     useEffect(() => {
