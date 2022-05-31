@@ -42,6 +42,7 @@ const CharList = (props) => {
 
   useEffect(() => {
     onLoadNewCharacters(true);
+    // eslint-disable-next-line
   }, []);
 
   const renderCharacters = (characters) => {

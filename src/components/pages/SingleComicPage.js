@@ -6,9 +6,9 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import Spinner from '../spinner/Spinner';
 import AppBanner from '../appBanner/AppBanner';
 
-import './ComicInfo.scss';
+import './SingleComicPage.scss';
 
-function ComicInfo() {
+function SingleComicPage() {
   const [comic, setComic] = useState(null);
   const {loading, error, getComic, clearError} = useMarvelService();
 
@@ -50,7 +50,7 @@ const View = ({comic}) => {
   const {title, price, description, language, pageCount, thumbnail} = comic;
   return (
     <>
-      <img src={thumbnail} alt="comicPoster" />
+      <img src={thumbnail} alt={title} />
       <div className="ComicInfo__about">
         <div className="ComicInfo__header">
           <h2 className="ComicInfo__name">{title}</h2>
@@ -67,4 +67,4 @@ const View = ({comic}) => {
   )
 }
 
-export default ComicInfo
+export default SingleComicPage;

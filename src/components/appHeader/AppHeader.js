@@ -18,7 +18,7 @@ function AppHeader() {
                 </li>
                 /
                 <li>
-                    <NavLink exact activeClassName='active' to='/comics'>Comics</NavLink>
+                    <NavLink activeClassName='active' to='/comics'>Comics</NavLink>
                 </li>
             </ul>
         </nav>

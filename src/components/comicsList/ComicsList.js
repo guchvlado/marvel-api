@@ -19,6 +19,7 @@ function ComicsList() {
 
   useEffect(() => {
     onLoadNewComics(true);
+    // eslint-disable-next-line
   }, [])
 
   const onLoadNewComics = (initial) => {
@@ -44,6 +45,7 @@ function ComicsList() {
     return comics.map((comic, i) => 
     <ComicsItem
       key={i}
+      id={comic.id}
       title={comic.title} 
       price={comic.price}
       thumbnail={comic.thumbnail}/>);
