@@ -4,6 +4,7 @@ import RandCharacter from '../randCharacter/RandCharacter';
 import CharList from '../charList/CharList';
 import CharInfo from '../charInfo/CharInfo';
 import ErrorBoundery from '../errorBoundery/ErrorBoundery';
+import Form from '../form/Form';
 
 import decoration from '../../resources/img/bg_character.png';
 
@@ -27,9 +28,13 @@ const MainPage = () => {
 
                 <div className="char-side">
 
-                <ErrorBoundery>
-                    <CharInfo characterId={selectedCharacter}/>
-                </ErrorBoundery>
+                    <ErrorBoundery>
+                        <CharInfo characterId={selectedCharacter}/>
+                    </ErrorBoundery>
+
+                    <ErrorBoundery>
+                        <Form/>
+                    </ErrorBoundery>
                 </div>
                 
                 <img className='bg-decoration' src={decoration} alt="decoration" />

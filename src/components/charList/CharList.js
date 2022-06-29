@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import CharItem from '../charItem/CharItem';
 import useMarvelService from '../../services/MarvelService';
@@ -46,16 +47,22 @@ const CharList = (props) => {
   }, []);
 
   const renderCharacters = (characters) => {
-    return characters.map((char, index) => 
-      <CharItem 
-        refFunc={el => itemsRef.current[index] = el}
-        name={char.name} 
-        thumbnail={char.thumbnail} 
-        key={char.id} 
-        onSelectCharacter={() => {
-          props.onSelectCharacter(char.id);
-          onFocusItem(index)
+    const items = characters.map((char, index) => 
+      <CSSTransition key={char.id} classNames="CharItem" timeout={500}>
+        <CharItem 
+          refFunc={el => itemsRef.current[index] = el}
+          name={char.name} 
+          thumbnail={char.thumbnail} 
+          onSelectCharacter={() => {
+            props.onSelectCharacter(char.id);
+            onFocusItem(index)
         }}/>
+      </CSSTransition>
+    )
+    return (
+      <TransitionGroup component={null}>
+        {items}
+      </TransitionGroup>
     )
   }
 
